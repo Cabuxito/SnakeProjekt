@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,22 +32,58 @@ namespace SnakeProjekt
         private SolidColorBrush _snakeBody = Brushes.LightGreen;
         private List<SnakeParts> _snakeParts = new();
         #endregion
+        #region Food Information
+        private UIElement _snakeFood = null;
+        private SolidColorBrush _foodBrush = Brushes.Red;
+        #endregion
 
-        public enum SnakeDirection { Left , Right, Top , Down }
+        public enum SnakeDirection { Left , Right, Up , Down }
         private SnakeDirection _direction = SnakeDirection.Right;
         private DispatcherTimer _gameTickTimer = new DispatcherTimer();
         private int _snakeLength;
+        private Random rnd = new();
 
         public MainWindow()
         {
             InitializeComponent();
             _gameTickTimer.Tick += GameTickTimer_Tick;
         }
-        private void Window_ContentRendered(object sender, EventArgs e)
+        private void Window_ContentRendered(object item, EventArgs e)
         {
             DrawGameArea();
             StartNewGame();
         }
+        private void Window_KeyUp(object item, KeyEventArgs e)
+        {
+            SnakeDirection direction = _direction;
+            switch (e.Key)
+            {
+                case Key.Up:
+                    if (_direction != SnakeDirection.Down)
+                        _direction = SnakeDirection.Up;
+                    break;
+                case Key.Down:
+                    if (_direction != SnakeDirection.Up)
+                        _direction = SnakeDirection.Down;
+                    break;
+                case Key.Left:
+                    if (_direction != SnakeDirection.Right)
+                        _direction = SnakeDirection.Left;
+                    break;
+                case Key.Right:
+                    if(_direction != SnakeDirection.Left)
+                        _direction = SnakeDirection.Right;
+                    break;
+                case Key.Space:
+                    StartNewGame();
+                    break;
+            }
+            if (_direction != direction)
+                MoveSnake();
+            
+        }
+
+        #region Draw Game and Snake.
         private void DrawGameArea()
         {
             bool doneDrawingBackground = false;
@@ -98,6 +135,8 @@ namespace SnakeProjekt
                 }
             }
         }
+        #endregion
+
         private void MoveSnake()
         {
             while (_snakeParts.Count >= _snakeLength)
@@ -121,7 +160,7 @@ namespace SnakeProjekt
                 case SnakeDirection.Right:
                     nextX += _snakeSquareSize;
                     break;
-                case SnakeDirection.Top:
+                case SnakeDirection.Up:
                     nextY -= _snakeSquareSize;
                     break;
                 case SnakeDirection.Down:
@@ -135,12 +174,10 @@ namespace SnakeProjekt
             });
             DrawSnake();
         }
-
         private void GameTickTimer_Tick(object sender, EventArgs e)
         {
             MoveSnake();
         }
-
         private void StartNewGame()
         {
             _snakeLength = SnakeStartLenght;
@@ -153,6 +190,23 @@ namespace SnakeProjekt
 
             DrawSnake();
             _gameTickTimer.IsEnabled = true;
+        }
+
+        private Point GetNextFoodPosition()
+        {
+            int maxX = (int)(GameArea.ActualWidth / _snakeSquareSize);
+            int maxY = (int)(GameArea.ActualHeight / _snakeSquareSize);
+            int foodX = rnd.Next(0, maxX) * _snakeSquareSize;
+            int foodY = rnd.Next(0, maxY) * _snakeSquareSize;
+
+            foreach (SnakeParts item in _snakeParts)
+            {
+                if ((item.Position.X == foodX) && (item.Position.Y == foodY))
+                {
+                    return GetNextFoodPosition();
+                }
+            }
+            return new Point(foodX, foodY);
         }
     }
 }
