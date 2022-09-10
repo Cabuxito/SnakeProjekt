@@ -25,7 +25,7 @@ namespace SnakeProjekt
     public partial class MainWindow : Window
     {
         #region Snake Information
-        const int _snakeSquareSize = 20;
+        const int _snakeSquareSize = 15;
         const int _snakeStartLenght = 3;
         const int _snakeStartSpeed = 300;
         const int _snakeSpeedThreshold = 100;
@@ -176,7 +176,7 @@ namespace SnakeProjekt
                 {
                     Width = _snakeSquareSize,
                     Height = _snakeSquareSize,
-                    Fill = nextIsOdd ? Brushes.DarkGray : Brushes.Gray
+                    Fill = nextIsOdd ? Brushes.Gray : Brushes.White
                 };
                 GameArea.Children.Add(rectangle);
                 Canvas.SetTop(rectangle, nextY);
