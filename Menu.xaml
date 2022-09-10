@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnakeProjekt"
         mc:Ignorable="d"
-        Title="Menu" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Menu" Height="400" Width="400">
+    <WrapPanel>
+        <Grid Height="384" Width="400" >
+            <Button Height="20" Width="50" FontSize="10" Margin="330,10,20,354" >Settings</Button>
+            <Button Height="20" Width="80" Margin="160,293,160,71">HighScore</Button>
+            <Button Height="25" Width="120" Margin="140,318,140,41" Click="Start_Click">Play Game</Button>
+        </Grid>
+    </WrapPanel>
 </Window>

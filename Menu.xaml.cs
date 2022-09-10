@@ -23,5 +23,10 @@ namespace SnakeProjekt
         {
             InitializeComponent();
         }
+        private void Start_Click(object sender, EventArgs e)
+        {
+            MainWindow main = new();
+            main.Show();
+        }
     }
 }
