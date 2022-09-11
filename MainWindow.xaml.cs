@@ -30,8 +30,8 @@ namespace SnakeProjekt
         const int _snakeStartSpeed = 300;
         const int _snakeSpeedThreshold = 100;
         private int _snakeLength;
-        private SolidColorBrush _snakeHead = Brushes.Green;
-        private SolidColorBrush _snakeBody = Brushes.LightGreen;
+        private SolidColorBrush _snakeHead = Brushes.DarkOrange;
+        private SolidColorBrush _snakeBody = Brushes.Orange;
         private List<SnakeParts> _snakeParts = new();
         #endregion
         #region Food Information
@@ -39,11 +39,10 @@ namespace SnakeProjekt
         private SolidColorBrush _foodBrush = Brushes.Red;
         private Random rnd = new();
         #endregion
-        
         public enum SnakeDirection { Left , Right, Up , Down }
         private SnakeDirection _direction = SnakeDirection.Right;
         private DispatcherTimer _gameTickTimer = new DispatcherTimer();
-        private int _currentScore = 0;  
+        private int _currentScore = 0;
 
         public MainWindow()
         {
@@ -291,7 +290,10 @@ namespace SnakeProjekt
         }
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
+            Menu menu = new Menu();
             this.Close();
+            menu.ShowDialog();
+
         }
     }   
 }

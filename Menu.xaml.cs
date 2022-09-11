@@ -19,14 +19,24 @@ namespace SnakeProjekt
     /// </summary>
     public partial class Menu : Window
     {
+        MainWindow mainWindow;
         public Menu()
         {
             InitializeComponent();
+            mainWindow = new MainWindow();
         }
+
         private void Start_Click(object sender, EventArgs e)
         {
-            MainWindow main = new();
-            main.Show();
+            this.Close();
+            mainWindow.Show();
         }
+
+        private void Settings_Click()
+        {
+
+        }
+
+        
     }
 }
