@@ -1,6 +1,8 @@
 ﻿using SnakeProjekt.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml.Serialization;
 using static SnakeProjekt.MainWindow;
 
 namespace SnakeProjekt
@@ -34,27 +37,88 @@ namespace SnakeProjekt
         private SolidColorBrush _snakeBody = Brushes.LightGreen;
         private List<SnakeParts> _snakeParts = new();
         #endregion
+
         #region Food Information
         private UIElement _snakeFood = null;
         private SolidColorBrush _foodBrush = Brushes.Red;
         private Random rnd = new();
         #endregion
-        
-        public enum SnakeDirection { Left , Right, Up , Down }
-        private SnakeDirection _direction = SnakeDirection.Right;
+
+        const int MaxHighscoreListEntryCount = 5;
+        public ObservableCollection<SnakeHighScore> HighscoreList
+        {
+            get; set;
+        } = new ObservableCollection<SnakeHighScore>();
+
         private DispatcherTimer _gameTickTimer = new DispatcherTimer();
         private int _currentScore = 0;  
 
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             _gameTickTimer.Tick += GameTickTimer_Tick;
+            LoadHighscoreList();
         }
         private void Window_ContentRendered(object item, EventArgs e)
         {
             DrawGameArea();
             StartNewGame();
         }
+
+        private void StartNewGame()
+        {
+            //Remove potential dead snake parts and leftover food...
+            foreach (SnakeParts item in _snakeParts)
+            {
+                if (item.UiElement != null)
+                    GameArea.Children.Remove(item.UiElement);
+            }
+            _snakeParts.Clear();
+            if (_snakeFood != null)
+                GameArea.Children.Remove(_snakeFood);
+
+            // Reset stuff
+            _currentScore = 0;
+            _snakeLength = _snakeStartLenght;
+            _direction = SnakeDirection.Right;
+            _snakeParts.Add(new SnakeParts() { Position = new Point(_snakeSquareSize * 5, _snakeSquareSize * 5) });
+            _gameTickTimer.Interval = TimeSpan.FromMilliseconds(_snakeStartSpeed);
+
+            // Draw the snake again and some new food...
+            DrawSnake();
+            DrawSnakeFood();
+
+            // Update status
+            UpdateGameStatus();
+
+            // Go!        
+            _gameTickTimer.IsEnabled = true;
+        }
+        private void EndGame()
+        {
+            bool isNewHighscore = false;
+            if (_currentScore > 0)
+            {
+                int lowestHighscore = (this.HighscoreList.Count > 0 ? this.HighscoreList.Min(x => x.Score) : 0);
+                if ((_currentScore > lowestHighscore) || (this.HighscoreList.Count < MaxHighscoreListEntryCount))
+                {
+                    bdrNewHighscore.Visibility = Visibility.Visible;
+                    txtPlayerName.Focus();
+                    isNewHighscore = true;
+                }
+            }
+            if (!isNewHighscore)
+            {
+                tbFinalScore.Text = _currentScore.ToString();
+                bdrEndOfGame.Visibility = Visibility.Visible;
+            }
+            _gameTickTimer.IsEnabled = false;
+        }
+
+        #region Snake Movements
+        public enum SnakeDirection { Left , Right, Up , Down }
         private void Window_KeyUp(object item, KeyEventArgs e)
         {
             SnakeDirection direction = _direction;
@@ -84,11 +148,8 @@ namespace SnakeProjekt
                 MoveSnake();
             
         }
-
-        private void GameTickTimer_Tick(object sender, EventArgs e)
-        {
-            MoveSnake();
-        }
+        private SnakeDirection _direction = SnakeDirection.Right;
+        private void GameTickTimer_Tick(object sender, EventArgs e) => MoveSnake();
         private void MoveSnake()
         {
             while (_snakeParts.Count >= _snakeLength)
@@ -127,40 +188,7 @@ namespace SnakeProjekt
             DrawSnake();
             DoCollisionCheck();
         }
-        private void StartNewGame()
-        {
-            //Remove potential dead snake parts and leftover food...
-            foreach (SnakeParts item in _snakeParts)
-            {
-                if (item.UiElement != null)
-                    GameArea.Children.Remove(item.UiElement);
-            }
-            _snakeParts.Clear();
-            if (_snakeFood != null)
-                GameArea.Children.Remove(_snakeFood);
-
-            // Reset stuff
-            _currentScore = 0;
-            _snakeLength = _snakeStartLenght;
-            _direction = SnakeDirection.Right;
-            _snakeParts.Add(new SnakeParts() { Position = new Point(_snakeSquareSize * 5, _snakeSquareSize * 5) });
-            _gameTickTimer.Interval = TimeSpan.FromMilliseconds(_snakeStartSpeed);
-
-            // Draw the snake again and some new food...
-            DrawSnake();
-            DrawSnakeFood();
-
-            // Update status
-            UpdateGameStatus();
-
-            // Go!        
-            _gameTickTimer.IsEnabled = true;
-        }
-        private void EndGame()
-        {
-            _gameTickTimer.IsEnabled = false;
-            MessageBox.Show("YOU DIE\nPress Space", "SnakeGame");
-        }
+        #endregion
 
         #region Draw Game and Snake.
         private void DrawGameArea()
@@ -215,6 +243,7 @@ namespace SnakeProjekt
             }
         }
         #endregion
+
         #region Food Services
         private Point GetNextFoodPosition()
         {
@@ -256,6 +285,7 @@ namespace SnakeProjekt
             UpdateGameStatus();
         }
         #endregion
+
         #region Collision Detection
         private void DoCollisionCheck()
         {
@@ -285,6 +315,54 @@ namespace SnakeProjekt
         }
         #endregion
 
+        #region Score
+        private void LoadHighscoreList()
+        {
+            if (File.Exists("snake_highscorelist.xml"))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<SnakeHighScore>));
+                using (Stream reader = new FileStream("snake_highscorelist.xml", FileMode.Open))
+                {
+                    List<SnakeHighScore> tempList = (List<SnakeHighScore>)serializer.Deserialize(reader);
+                    this.HighscoreList.Clear();
+                    foreach (var item in tempList.OrderByDescending(x => x.Score))
+                        this.HighscoreList.Add(item);
+                }
+            }
+        }
+        private void SaveHighscoreList()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<SnakeHighScore>));
+            using (Stream writer = new FileStream("snake_highscorelist.xml", FileMode.Create))
+            {
+                serializer.Serialize(writer, this.HighscoreList);
+            }
+        }
+        private void BtnAddToHighscoreList_Click(object sender, RoutedEventArgs e)
+        {
+            int newIndex = 0;
+            // Where should the new entry be inserted?
+            if ((this.HighscoreList.Count > 0) && (_currentScore < this.HighscoreList.Max(x => x.Score)))
+            {
+                SnakeHighScore justAbove = this.HighscoreList.OrderByDescending(x => x.Score).First(x => x.Score >= _currentScore);
+                if (justAbove != null)
+                    newIndex = this.HighscoreList.IndexOf(justAbove) + 1;
+            }
+            // Create & insert the new entry
+            this.HighscoreList.Insert(newIndex, new SnakeHighScore()
+            {
+                PlayerName = txtPlayerName.Text,
+                Score = _currentScore
+            });
+            // Make sure that the amount of entries does not exceed the maximum
+            while (this.HighscoreList.Count > MaxHighscoreListEntryCount)
+                this.HighscoreList.RemoveAt(MaxHighscoreListEntryCount);
+
+            SaveHighscoreList();
+
+            bdrNewHighscore.Visibility = Visibility.Collapsed;
+        }
+        #endregion
         private void Window_MouseDown(Object sender, MouseButtonEventArgs btnArgs)
         {
             this.DragMove();
