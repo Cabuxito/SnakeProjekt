@@ -61,6 +61,7 @@ namespace SnakeProjekt
             _gameTickTimer.Tick += GameTickTimer_Tick;
             LoadHighscoreList();
         }
+
         private void Window_ContentRendered(object item, EventArgs e)
         {
             DrawGameArea();
@@ -115,6 +116,10 @@ namespace SnakeProjekt
                 bdrEndOfGame.Visibility = Visibility.Visible;
             }
             _gameTickTimer.IsEnabled = false;
+        }
+        private void Window_MouseDown(Object sender, MouseButtonEventArgs btnArgs)
+        {
+            this.DragMove();
         }
 
         #region Snake Movements
@@ -363,10 +368,7 @@ namespace SnakeProjekt
             bdrNewHighscore.Visibility = Visibility.Collapsed;
         }
         #endregion
-        private void Window_MouseDown(Object sender, MouseButtonEventArgs btnArgs)
-        {
-            this.DragMove();
-        }
+
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

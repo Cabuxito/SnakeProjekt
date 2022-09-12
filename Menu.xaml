@@ -7,7 +7,7 @@
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         x:Name="window"
         mc:Ignorable="d"
-        Title="Menu" Height="400" Width="400">
+        Title="Menu" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStyle="None">
     <Window.Resources>
         <CollectionViewSource Source="{Binding Path=HighscoreList}" x:Key="HighScoreListViewSource">
             <CollectionViewSource.SortDescriptions>
@@ -15,8 +15,28 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </Window.Resources>
-    <WrapPanel>
-        <Grid Height="384" Width="400">
+    <DockPanel Background="Black">
+        <Grid DockPanel.Dock="Top" Name="pnlTitleBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontFamily" Value="Consolas" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Style>
+            </Grid.Resources>
+            <WrapPanel Margin="10,2,0,0">
+                <TextBlock>Snake Game - Menu</TextBlock>
+            </WrapPanel>
+            <Button Grid.Column="2" DockPanel.Dock="Right" Background="Transparent" Foreground="White" FontWeight="Bold" FontSize="20" BorderThickness="0" Name="btnClose" Click="BtnClose_Click" Padding="10,0">X</Button>
+        </Grid>
+        <Grid>
             <Grid.Background>
                 <ImageBrush ImageSource="C:\Users\brian\source\repos\SnakeProjekt\Imgs\joey.jpg"/>
             </Grid.Background>
@@ -44,8 +64,8 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                <Button Click="BtnBack_Click">Menu</Button>
             </StackPanel>
         </Border>
-    </WrapPanel>
-    
+    </DockPanel>
 </Window>
