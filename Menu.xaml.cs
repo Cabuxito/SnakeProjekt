@@ -44,6 +44,10 @@ namespace SnakeProjekt
         {
             
         }
-        
+
+        private void window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }
