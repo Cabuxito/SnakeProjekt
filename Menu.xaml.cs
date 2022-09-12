@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,18 @@ namespace SnakeProjekt
         public Menu()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
         private void Start_Click(object sender, EventArgs e)
         {
             MainWindow main = new();
+            this.Close();
             main.Show();
+        }
+        private void BtnShowHighscoreList_Click(object sender, RoutedEventArgs e)
+        {
+            StartBtn.Visibility = Visibility.Collapsed;
+            bdrHighscoreList.Visibility = Visibility.Visible;
         }
     }
 }
