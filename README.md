@@ -14,7 +14,7 @@ I got a projekt where I need to do a Snake Game in WPF, and try to create some f
 ## Demands 
 
 <ul>
-  <li> DevelopV1: Create Game Window and Snake.</li> [✔️]
+  <li> DevelopV1: Create Game Window and Snake.[✔️]</li> 
   <li> DevelopV1.1: Snake interactions and funcionality working.</li> [✔️]
   <li> DevelopV1.2: Add Food.</li> [✔️]
   <li> DevelopV1.3: Add Menu Window </li> [✔️]
