@@ -48,14 +48,19 @@ I got a projekt where I need to do a Snake Game in WPF, and try to create some f
 **v1**:
 Game window is working and it can see.
 The snake has a form and is created, but it is not incorporate in the game yet.
+
 **v1.1**:
 Snake movements create and person can interact using the keys.
+
 **v1.2**: 
 Incorporate food to the game and try to increase or make some changes on the speed.
+
 **v1.3**:
 Add a menu Window and design it.
+
 **v1.4**:
 Add score and make menu user interactive and try to fix all bugs..
+
 **v1.5**:
 Options settings is half working.. but its there!
 
