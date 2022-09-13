@@ -29,6 +29,7 @@ I got a projekt where I need to do a Snake Game in WPF, and try to create some f
 * Press play to start a new game 
 * Press Highscore to see top 5 score
 * Press settings if you wants to delete all players saves.
+* When you die you can write your name into the top 5 if you are good enough, else you can try again by press Space!.
 
 ## Tags
 
