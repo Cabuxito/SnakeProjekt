@@ -50,9 +50,16 @@
                 <Border BorderBrush="Silver" BorderThickness="2" Width="300" Height="300" Canvas.Left="50" Canvas.Top="50" Name="bdrEndOfGame" Panel.ZIndex="1" Visibility="Collapsed">
                     <StackPanel Orientation="Vertical" Background="AliceBlue">
                         <TextBlock HorizontalAlignment="Center" FontSize="40" FontWeight="Bold" Margin="0,20,0,0">Oh no!</TextBlock>
-                        <TextBlock HorizontalAlignment="Center" FontSize="26" FontWeight="Bold">...you died!</TextBlock>
+                        <TextBlock HorizontalAlignment="Center" FontSize="26" FontWeight="Bold">..:You Die</TextBlock>
                         <TextBlock Margin="20" TextAlignment="Center" FontSize="16">Your score:</TextBlock>
                         <TextBlock Name="tbFinalScore" TextAlignment="Center" FontSize="48" FontWeight="Bold" Foreground="Maroon">0</TextBlock>
+                        <TextBlock TextAlignment="Center" FontSize="16" Margin="20">Press SPACE to new game</TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border BorderBrush="Silver" BorderThickness="2" Width="300" Height="300" Canvas.Left="50" Canvas.Top="50" Name="newGame" Panel.ZIndex="1" Visibility="Collapsed">
+                    <StackPanel Orientation="Vertical" Background="AliceBlue">
+                        <TextBlock HorizontalAlignment="Center" FontSize="40" FontWeight="Bold" Margin="0,20,0,0">Start New Game</TextBlock>
+                        <TextBlock HorizontalAlignment="Center" FontSize="26" FontWeight="Bold">Eat the apples and survive</TextBlock>
                         <TextBlock TextAlignment="Center" FontSize="16" Margin="20">Press SPACE to new game</TextBlock>
                     </StackPanel>
                 </Border>

@@ -29,13 +29,14 @@ namespace SnakeProjekt
         public Menu()
         {
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            LoadHighscoreList();
             this.DataContext = score;
+            LoadHighscoreList();
         }
         
         private void Start_Click(object sender, EventArgs e)
         {
-            main.Show();
+            main = new(score);
+            main.ShowDialog();
         }
 
         #region Score
@@ -78,7 +79,8 @@ namespace SnakeProjekt
 
         private void OptionsWindow_Click(object sender, RoutedEventArgs e)
         {
-            
+            OptionsWindow options = new();
+            options.ShowDialog();
         }
     }
 }   
