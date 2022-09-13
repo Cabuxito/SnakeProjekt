@@ -44,7 +44,7 @@ I got a projekt where I need to do a Snake Game in WPF, and try to create some f
 
 [Github](https://github.com/Cabuxito/SnakeProjekt/branches) - Here is my branches and what it happens in every update.
 
-## v1:
+#### v1:
 Game window is working and it can see.
 The snake has a form and is created, but it is not incorporate in the game yet.
 ## v1.1:
