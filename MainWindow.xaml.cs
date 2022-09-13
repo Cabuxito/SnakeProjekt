@@ -28,10 +28,10 @@ namespace SnakeProjekt
     public partial class MainWindow : Window
     {
         #region Snake Information
-        const int _snakeSquareSize = 15;
+        const int _snakeSquareSize = 20;
         const int _snakeStartLenght = 3;
         const int _snakeStartSpeed = 300;
-        const int _snakeSpeedThreshold = 100;
+        const int _snakeSpeedThreshold = 50;
         private int _snakeLength;
         private SolidColorBrush _snakeHead = Brushes.DarkOrange;
         private SolidColorBrush _snakeBody = Brushes.Orange;
@@ -56,9 +56,9 @@ namespace SnakeProjekt
         public MainWindow(HighScore score)
         {
             InitializeComponent();
+            _gameTickTimer.Tick += GameTickTimer_Tick;
             this.DataContext = this;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            _gameTickTimer.Tick += GameTickTimer_Tick;
             _score = score;
         }
 
@@ -73,7 +73,7 @@ namespace SnakeProjekt
         }
 
         #region Start/End Game
-        private void StartNewGame()
+        public void StartNewGame()
         {
             //Remove potential dead snake parts and leftover food...
             foreach (SnakeParts item in _snakeParts)
@@ -99,7 +99,7 @@ namespace SnakeProjekt
             // Update status
             UpdateGameStatus();
 
-            // Go!        
+            // Go!
             _gameTickTimer.IsEnabled = true;
             bdrEndOfGame.Visibility = Visibility.Collapsed;
         }
@@ -371,7 +371,7 @@ namespace SnakeProjekt
 
             bdrNewHighscore.Visibility = Visibility.Collapsed;
 
-            this.Hide();
+            this.Close();
         }
         #endregion
 

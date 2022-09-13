@@ -15,6 +15,7 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </Window.Resources>
+     
     <DockPanel Background="Black">
         <Grid DockPanel.Dock="Top" Name="pnlTitleBar">
             <Grid.ColumnDefinitions>
@@ -22,7 +23,6 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-
             <Grid.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="FontFamily" Value="Consolas" />
@@ -31,6 +31,7 @@
                     <Setter Property="FontWeight" Value="Bold" />
                 </Style>
             </Grid.Resources>
+            
             <WrapPanel Margin="10,2,0,0">
                 <TextBlock>Snake Game - Menu</TextBlock>
             </WrapPanel>
