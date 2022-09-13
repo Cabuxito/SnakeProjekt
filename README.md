@@ -1,4 +1,5 @@
-#Snake Game
+
+# Snake Game
 
 ## Table of content
 
