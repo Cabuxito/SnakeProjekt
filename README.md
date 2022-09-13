@@ -16,10 +16,10 @@ I got a projekt where I need to do a Snake Game in WPF, and try to create some f
 <ul>
   <li> DevelopV1: Create Game Window and Snake.</li> [✔️]
   <li> DevelopV1.1: Snake interactions and funcionality working.</li> [✔️]
-  <li> DevelopV1.2: Add Food and score.</li> [✔️]
-  <li> DevelopV1.3:  </li> [ ]
-  <li> DevelopV1.4: Add Menu Window and do it user interactive. </li> [ ]
-  <li> DevelopV1.5: </li> [ ]
+  <li> DevelopV1.2: Add Food.</li> [✔️]
+  <li> DevelopV1.3: Add Menu Window </li> [ ]
+  <li> DevelopV1.4: Add Score and do Menu user interactive. </li> [ ]
+  <li> DevelopV1.5: Add Options Button that deletes leaderboards. </li> [ ]
 </ul>
 
 ## Instructions
@@ -28,15 +28,15 @@ I got a projekt where I need to do a Snake Game in WPF, and try to create some f
 ## Tags
 
 * [v1] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1
-* [v1.1] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.1 - Current version
-* [v1.2] #Under Develop
-* [v1.3] #coming soon
-* [v1.4] #coming soon
-* [v1.5] #coming soon
+* [v1.1] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.1
+* [v1.2] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.2
+* [v1.3] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.3
+* [v1.4] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.4
+* [v1.5] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.5 - Current Version.
 
 ## Changelog
 
-[Github](https://github.com/Cabuxito/Rent-A-Car/branches) - Here is my branches and what it happens in every update.
+[Github](https://github.com/Cabuxito/SnakeProjekt/branches) - Here is my branches and what it happens in every update.
 
 ## v1:
 Game window is working and it can see.
@@ -44,13 +44,18 @@ The snake has a form and is created, but it is not incorporate in the game yet.
 ## v1.1:
 Snake movements create and person can interact using the keys.
 ## v1.2: 
-Incorporate food to the game and try to increase or make some changes on the speed and score.
+Incorporate food to the game and try to increase or make some changes on the speed.
+## v1.3:
+Add a menu Window and design it.
+## v1.4:
+Add score and make menu user interactive and try to fix all bugs..
+## v1.5
+Options settings is half working.. but its there!
 
 
 
 # To-do
-* 
-* 
-* 
-* 
-* 
+* Fix Options
+* Incorporate Top 10
+* Add Sound
+* Try to change the snake color by users choice
