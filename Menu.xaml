@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="Menu" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStyle="None" MouseDown="window_MouseDown">
     <Window.Resources>
-        <CollectionViewSource Source="{Binding Path=HighscoreList}" x:Key="HighScoreListViewSource">
+        <CollectionViewSource Source="{Binding HighscoreList}" x:Key="HighScoreListViewSource">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription Direction="Descending" PropertyName="Score" />
             </CollectionViewSource.SortDescriptions>
@@ -42,29 +42,29 @@
             </Grid.Background>
             <Border Name="StartBtn">
                 <Grid>
-                    <TextBlock FontWeight="Bold" FontSize="50" HorizontalAlignment="Center" Margin="0,20,0,0">SnakeGame</TextBlock>
-                    <Button Height="20" Width="50" FontSize="10" Margin="337,10,13,354" >Settings</Button>
-                    <Button Height="20" Width="80"  Click="BtnShowHighscoreList_Click" Margin="160,289,160,75">HighScore</Button>
-                    <Button Height="25" Width="120"  Click="Start_Click" Content="Play Game" Margin="140,323,140,36"/>
+                    <TextBlock FontWeight="Bold" FontSize="40" HorizontalAlignment="Center" Margin="0,44,0,256">The Game of Joey</TextBlock>
+                    <Button Height="20" Width="50" FontSize="10" Margin="337,10,13,354" Content="Settings" Click="OptionsWindow_Click"/>
+                    <Button  Click="BtnShowHighscoreList_Click" Margin="154,259,154,94" Content="HighScore"/>
+                    <Button  Click="Start_Click" Content="Play Game" Margin="130,304,130,42" RenderTransformOrigin="0.505,0.592"/>
                 </Grid>
             </Border>
         </Grid>
-        <Border BorderBrush="Silver" BorderThickness="2" Width="300" Height="300" Name="bdrHighscoreList" Panel.ZIndex="1" Visibility="Collapsed">
+        <Border BorderBrush="Silver" BorderThickness="2" Width="400" Height="400" Name="bdrHighscoreList" Panel.ZIndex="1" Visibility="Collapsed">
             <StackPanel Orientation="Vertical" Background="AliceBlue">
                 <Border BorderThickness="0,0,0,2" BorderBrush="Silver" Margin="0,10">
-                    <TextBlock HorizontalAlignment="Center" FontSize="34" FontWeight="Bold">High Score List</TextBlock>
+                    <TextBlock HorizontalAlignment="Center" FontSize="30" FontWeight="Bold">High Score List</TextBlock>
                 </Border>
                 <ItemsControl ItemsSource="{Binding Source={StaticResource HighScoreListViewSource}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <DockPanel Margin="7">
-                                <TextBlock Text="{Binding PlayerName}" DockPanel.Dock="Left" FontSize="22"></TextBlock>
-                                <TextBlock Text="{Binding Score}" DockPanel.Dock="Right" FontSize="22" HorizontalAlignment="Right"></TextBlock>
+                                <TextBlock Text="{Binding PlayerName}" DockPanel.Dock="Left" FontSize="20"></TextBlock>
+                                <TextBlock Text="{Binding Score}" DockPanel.Dock="Right" FontSize="20" HorizontalAlignment="Right"></TextBlock>
                             </DockPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Button Click="BtnBack_Click">Menu</Button>
+                <Button Height="20" Width="50" Margin="0,100,0,0" Click="BtnBack_Click">Menu</Button>
             </StackPanel>
         </Border>
     </DockPanel>

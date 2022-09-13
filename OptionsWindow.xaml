@@ -1,0 +1,15 @@
+﻿<Window x:Class="SnakeProjekt.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SnakeProjekt"
+        mc:Ignorable="d"
+        Title="Settings" Margin="1,1,0,0" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+    <Border Width="200" Height="200" Name="optionsWindow">
+        <StackPanel Margin="10,10,10,174">
+            <CheckBox FontFamily="bold" Height="148">Mute</CheckBox>
+            <Button Height="20" Width="50"  Content="Delete Data"/>
+        </StackPanel>
+    </Border>
+</Window>

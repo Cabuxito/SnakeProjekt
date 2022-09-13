@@ -33,33 +33,33 @@ namespace SnakeProjekt
         const int _snakeStartSpeed = 300;
         const int _snakeSpeedThreshold = 100;
         private int _snakeLength;
-        private SolidColorBrush _snakeHead = Brushes.Green;
-        private SolidColorBrush _snakeBody = Brushes.LightGreen;
+        private SolidColorBrush _snakeHead = Brushes.DarkOrange;
+        private SolidColorBrush _snakeBody = Brushes.Orange;
         private List<SnakeParts> _snakeParts = new();
         #endregion
 
         #region Food Information
         private UIElement _snakeFood = null;
+        private UIElement _bonusFood = null;
         private SolidColorBrush _foodBrush = Brushes.Red;
+        private SolidColorBrush _bonusBrush = Brushes.Black;
         private Random rnd = new();
         #endregion
 
         const int MaxHighscoreListEntryCount = 5;
-        public ObservableCollection<SnakeHighScore> HighscoreList
-        {
-            get; set;
-        } = new ObservableCollection<SnakeHighScore>();
+        
 
         private DispatcherTimer _gameTickTimer = new DispatcherTimer();
-        private int _currentScore = 0;  
+        private int _currentScore = 0;
+        HighScore _score;
 
-        public MainWindow()
+        public MainWindow(HighScore score)
         {
             InitializeComponent();
             this.DataContext = this;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             _gameTickTimer.Tick += GameTickTimer_Tick;
-            LoadHighscoreList();
+            _score = score;
         }
 
         private void Window_ContentRendered(object item, EventArgs e)
@@ -67,7 +67,12 @@ namespace SnakeProjekt
             DrawGameArea();
             StartNewGame();
         }
+        private void Window_MouseDown(Object sender, MouseButtonEventArgs btnArgs)
+        {
+            this.DragMove();
+        }
 
+        #region Start/End Game
         private void StartNewGame()
         {
             //Remove potential dead snake parts and leftover food...
@@ -96,14 +101,15 @@ namespace SnakeProjekt
 
             // Go!        
             _gameTickTimer.IsEnabled = true;
+            bdrEndOfGame.Visibility = Visibility.Collapsed;
         }
         private void EndGame()
         {
             bool isNewHighscore = false;
             if (_currentScore > 0)
             {
-                int lowestHighscore = (this.HighscoreList.Count > 0 ? this.HighscoreList.Min(x => x.Score) : 0);
-                if ((_currentScore > lowestHighscore) || (this.HighscoreList.Count < MaxHighscoreListEntryCount))
+                int lowestHighscore = (_score.HighscoreList.Count > 0 ? _score.HighscoreList.Min(x => x.Score) : 0);
+                if ((_currentScore > lowestHighscore) || (_score.HighscoreList.Count < MaxHighscoreListEntryCount))
                 {
                     bdrNewHighscore.Visibility = Visibility.Visible;
                     txtPlayerName.Focus();
@@ -117,10 +123,7 @@ namespace SnakeProjekt
             }
             _gameTickTimer.IsEnabled = false;
         }
-        private void Window_MouseDown(Object sender, MouseButtonEventArgs btnArgs)
-        {
-            this.DragMove();
-        }
+        #endregion
 
         #region Snake Movements
         public enum SnakeDirection { Left , Right, Up , Down }
@@ -147,6 +150,9 @@ namespace SnakeProjekt
                     break;
                 case Key.Space:
                     StartNewGame();
+                    break;
+                case Key.Escape:
+                    this.Hide();
                     break;
             }
             if (_direction != direction)
@@ -209,7 +215,7 @@ namespace SnakeProjekt
                 {
                     Width = _snakeSquareSize,
                     Height = _snakeSquareSize,
-                    Fill = nextIsOdd ? Brushes.Gray : Brushes.White
+                    Fill = nextIsOdd ? Brushes.Gray : Brushes.Black
                 };
                 GameArea.Children.Add(rectangle);
                 Canvas.SetTop(rectangle, nextY);
@@ -278,6 +284,17 @@ namespace SnakeProjekt
             GameArea.Children.Add(_snakeFood);
             Canvas.SetTop(_snakeFood, foodPosition.Y);
             Canvas.SetLeft(_snakeFood, foodPosition.X);
+
+            //Point BonusPoint = GetNextFoodPosition();
+            //_bonusFood = new Ellipse()
+            //{
+            //    Width = _snakeSquareSize,
+            //    Height = _snakeSquareSize,
+            //    Fill = _bonusBrush
+            //};
+            //GameArea.Children.Add(_bonusFood);
+            //Canvas.SetTop(_bonusFood, foodPosition.Y);
+            //Canvas.SetLeft(_bonusFood, foodPosition.X);
         }
         private void EatSnakeFood()
         {
@@ -321,57 +338,46 @@ namespace SnakeProjekt
         #endregion
 
         #region Score
-        private void LoadHighscoreList()
-        {
-            if (File.Exists("snake_highscorelist.xml"))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<SnakeHighScore>));
-                using (Stream reader = new FileStream("snake_highscorelist.xml", FileMode.Open))
-                {
-                    List<SnakeHighScore> tempList = (List<SnakeHighScore>)serializer.Deserialize(reader);
-                    this.HighscoreList.Clear();
-                    foreach (var item in tempList.OrderByDescending(x => x.Score))
-                        this.HighscoreList.Add(item);
-                }
-            }
-        }
+        
         private void SaveHighscoreList()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<SnakeHighScore>));
             using (Stream writer = new FileStream("snake_highscorelist.xml", FileMode.Create))
             {
-                serializer.Serialize(writer, this.HighscoreList);
+                serializer.Serialize(writer, _score.HighscoreList);
             }
         }
         private void BtnAddToHighscoreList_Click(object sender, RoutedEventArgs e)
         {
             int newIndex = 0;
             // Where should the new entry be inserted?
-            if ((this.HighscoreList.Count > 0) && (_currentScore < this.HighscoreList.Max(x => x.Score)))
+            if ((_score.HighscoreList.Count > 0) && (_currentScore < _score.HighscoreList.Max(x => x.Score)))
             {
-                SnakeHighScore justAbove = this.HighscoreList.OrderByDescending(x => x.Score).First(x => x.Score >= _currentScore);
+                SnakeHighScore justAbove = _score.HighscoreList.OrderByDescending(x => x.Score).First(x => x.Score >= _currentScore);
                 if (justAbove != null)
-                    newIndex = this.HighscoreList.IndexOf(justAbove) + 1;
+                    newIndex = _score.HighscoreList.IndexOf(justAbove) + 1;
             }
             // Create & insert the new entry
-            this.HighscoreList.Insert(newIndex, new SnakeHighScore()
+            _score.HighscoreList.Insert(newIndex, new SnakeHighScore()
             {
                 PlayerName = txtPlayerName.Text,
                 Score = _currentScore
             });
             // Make sure that the amount of entries does not exceed the maximum
-            while (this.HighscoreList.Count > MaxHighscoreListEntryCount)
-                this.HighscoreList.RemoveAt(MaxHighscoreListEntryCount);
+            while (_score.HighscoreList.Count > MaxHighscoreListEntryCount)
+                _score.HighscoreList.RemoveAt(MaxHighscoreListEntryCount);
 
             SaveHighscoreList();
 
             bdrNewHighscore.Visibility = Visibility.Collapsed;
+
+            this.Hide();
         }
         #endregion
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Application.Current.Shutdown();
         }
     }   
 }
