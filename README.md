@@ -19,7 +19,7 @@ I got a projekt where I need to do a Snake Game in WPF, and try to create some f
   <li> DevelopV1.2: Add Food.</li> [✔️]
   <li> DevelopV1.3: Add Menu Window </li> [✔️]
   <li> DevelopV1.4: Add Score and do Menu user interactive. </li> [✔️]
-  <li> DevelopV1.5: Add Options Button that deletes leaderboards. </li> [✔️]
+  <li> DevelopV1.5: Add Options Button that deletes leaderboards. </li> [Under Develop]
 </ul>
 
 ## Instructions
