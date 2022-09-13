@@ -24,6 +24,11 @@ I got a projekt where I need to do a Snake Game in WPF, and try to create some f
 
 ## Instructions
 
+![image](https://user-images.githubusercontent.com/89253662/189979140-662d1e63-4e6e-4680-96db-7cea5846ed02.png)
+
+* Press play to start a new game 
+* Press Highscore to see top 5 score
+* Press settings if you wants to delete all players saves.
 
 ## Tags
 
