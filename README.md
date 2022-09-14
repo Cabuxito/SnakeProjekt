@@ -11,7 +11,7 @@
 * [To-do](#To-do)
 * 
 ## Intro
-I got a projekt where I need to do a Snake Game in WPF, and try to create some features like scorebord, menu, etc..
+I got a projekt where I did copy a Snake Game in WPF, add some features and do it more user responsive.
 
 ## Demands 
 
