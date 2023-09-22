@@ -9,7 +9,7 @@
 * [Tags](#Tags)
 * [Changelog](#Changelog)
 * [To-do](#To-do)
-* 
+  
 ## Intro
 I got a projekt where I did copy a Snake Game in WPF, add some features and do it more user responsive.
 
@@ -35,12 +35,12 @@ I got a projekt where I did copy a Snake Game in WPF, add some features and do i
 
 ## Tags
 
-* [v1]https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1
-* [v1.1] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.1
-* [v1.2] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.2
-* [v1.3] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.3
-* [v1.4] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.4
-* [v1.5] https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.5 - Current Version.
+* [v1](https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1)
+* [v1.1] (https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.1)
+* [v1.2] (https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.2)
+* [v1.3] (https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.3)
+* [v1.4] (https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.4)
+* [v1.5] (https://github.com/Cabuxito/SnakeProjekt/tree/DevelopV1.5) - Current Version.
 
 ## Changelog
 
